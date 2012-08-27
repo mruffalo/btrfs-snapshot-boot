@@ -30,6 +30,10 @@ TODO:
   Previously, I would run btrfs-snapshot.sh myself after booting from a USB
   drive, and to get something working it was easiest to have the initrd script
   do what I was already doing.
+* Be smarter about which subvolumes to make snapshots of, instead of hardcoding
+  '@' and '@home'. It might suffice to filter the output of 'btrfs subvolume
+  list' and make snapshots of every subvolume that doesn't contain '/' in its
+  path.
 
 *** IF YOU ARE USING UBUNTU 12.04 OR OLDER ***
 The version of btrfs-tools in Ubuntu Precise can't make a read-only snapshot of
