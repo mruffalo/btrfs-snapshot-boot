@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+PREREQ="btrfs"
+
+prereqs()
+{
+	echo "${PREREQ}"
+}
+
+case "${1}" in
+	prereqs)
+		prereqs
+		exit 0
+		;;
+esac
+
+if [ -x /sbin/btrfs ]
+then
+	mkdir -p /mnt/btrfs
+	mount /dev/sda1 /mnt/btrfs
+	cd /mnt/btrfs
+	sh btrfs-snapshot.sh
+	cd $OLDPWD
+	umount /mnt/btrfs
+fi
+
+exit 0
