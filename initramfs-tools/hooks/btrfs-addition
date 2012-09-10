@@ -1,0 +1,4 @@
+if [ -x /sbin/btrfs ]
+then
+	copy_exec /sbin/btrfs /sbin
+fi
