@@ -18,12 +18,21 @@ esac
 
 if [ -x /sbin/btrfs ]
 then
+	timestamp=$(date +%Y%m%d-%H%M%S%z)
 	mkdir -p /mnt/btrfs
-	mount /dev/sda1 /mnt/btrfs
-	cd /mnt/btrfs
-	sh btrfs-snapshot.sh
-	cd $OLDPWD
-	umount /mnt/btrfs
+	for fs in $(btrfs filesystem show | grep ^Label | awk '{print $4}'); do
+		mount UUID=$fs /mnt/btrfs
+		cd /mnt/btrfs
+		for subvol in $(btrfs subvolume list . | grep -v / | awk '{print $7}'); do
+			snapshot_name=$(echo $subvol | sed -r 's/^\@(.*)/\1/')
+			if [ -z $snapshot_name ]; then
+				snapshot_name=root
+			fi
+			btrfs subvolume snapshot -r $subvol snapshots/$snapshot_name@$timestamp
+		done
+		cd $OLDPWD
+		umount /mnt/btrfs
+	done
 fi
 
 exit 0
