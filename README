@@ -17,7 +17,7 @@ To use this on your system:
 There are two issues:
 * The version of btrfs-tools in Ubuntu Precise can't make a read-only snapshot
   of a subvolume. Until btrfs-tools 0.19+20120328 (or newer) is backported, you
-  must edit btrfs-subvolume.sh to remove the '-r' argument.
+  must edit the btrfs-snapshot script to remove the '-r' argument.
 * The btrfs tool that's copied into the initrd is the 'btrfsctl' tool instead
   of 'btrfs', so I worked around this with a big hack -- I overrode the btrfs
   hook script to also copy 'btrfs'. To do this on your system, append the
