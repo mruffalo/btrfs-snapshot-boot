@@ -1,17 +1,8 @@
 This is a shell script addition to the Ubuntu initramfs tools that will create
-btrfs snapshots of the root and home subvolumes on every boot.
-
-This works with my specific hard drive partition scheme: /dev/sda1 is btrfs
-with the default subvolume structure done by the Ubuntu installer. That is,
-subvolume '@' is / and '@home' is /home.
+btrfs snapshots of all top-level subvolumes (in each btrfs filesystem) on every
+boot.
 
 To use this on your system:
-* Edit initramfs-tools/scripts/local-premount/btrfs-snapshot to match your
-  partition layout/configuration
-* Edit btrfs-snapshot.sh to match your subvolume layout
-(as root:)
-* Mount the root subvolume of your btrfs filesystem somewhere, and copy
-  btrfs-snapshot.sh to the top level of the root subvolume
 * Copy initramfs-tools/scripts/local-premount/btrfs-snapshot to
   /usr/share/initramfs-tools/scripts/local-premount
 * Run 'update-initramfs'
@@ -21,19 +12,6 @@ To use this on your system:
   - Fix/delete /usr/share/initramfs-tools/scripts/local-premount in your
     root filesystem
   - Run 'update-initramfs' again
-
-This is still very much a proof-of-concept.
-TODO:
-* Check whether the root filesystem is btrfs before doing anything
-* Don't assume /dev/sda1
-* Move functionality from btrfs-snapshot.sh directly into the initrd script.
-  Previously, I would run btrfs-snapshot.sh myself after booting from a USB
-  drive, and to get something working it was easiest to have the initrd script
-  do what I was already doing.
-* Be smarter about which subvolumes to make snapshots of, instead of hardcoding
-  '@' and '@home'. It might suffice to filter the output of 'btrfs subvolume
-  list' and make snapshots of every subvolume that doesn't contain '/' in its
-  path.
 
 *** IF YOU ARE USING UBUNTU 12.04 OR OLDER ***
 There are two issues:
