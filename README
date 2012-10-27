@@ -3,6 +3,8 @@ btrfs snapshots of all top-level subvolumes (in each btrfs filesystem) on every
 boot.
 
 To use this on your system:
+* For each btrfs filesystem that you'd like to snapshot on boot, mount the root
+  subvolume and make a top-level 'snapshots' directory.
 * Copy initramfs-tools/scripts/local-premount/btrfs-snapshot to
   /usr/share/initramfs-tools/scripts/local-premount
 * Run 'update-initramfs'
