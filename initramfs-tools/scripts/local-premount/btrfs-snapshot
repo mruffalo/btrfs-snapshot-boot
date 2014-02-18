@@ -23,7 +23,7 @@ then
 	for uuid in $(btrfs filesystem show | grep ^Label | awk '{print $4}'); do
 		mount /dev/disk/by-uuid/$uuid /mnt/btrfs
 		cd /mnt/btrfs
-		for subvol in $(btrfs subvolume list . | grep -v / | awk '{n = split($0, a); print a[n]}'); do
+		for subvol in $(btrfs subvolume list . | grep -v / | grep -v DELETED | awk '{n = split($0, a); print a[n]}'); do
 			snapshot_name=$(echo $subvol | sed -r 's/^\@(.*)/\1/')
 			if [ -z $snapshot_name ]; then
 				snapshot_name=root
