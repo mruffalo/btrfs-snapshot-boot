@@ -15,17 +15,4 @@ To use this on your system:
     root filesystem
   - Run 'update-initramfs' again
 
-*** IF YOU ARE USING UBUNTU 12.04 OR OLDER ***
-There are two issues:
-* The version of btrfs-tools in Ubuntu Precise can't make a read-only snapshot
-  of a subvolume. Until btrfs-tools 0.19+20120328 (or newer) is backported, you
-  must edit the btrfs-snapshot script to remove the '-r' argument.
-* The btrfs tool that's copied into the initrd is the 'btrfsctl' tool instead
-  of 'btrfs', so I worked around this with a big hack -- I overrode the btrfs
-  hook script to also copy 'btrfs'. To do this on your system, append the
-  contents of initramfs-tools/hooks/btrfs-addition to
-  /usr/share/initramfs-tools/hooks/btrfs. Of course, re-run 'update-initramfs'
-  after this change. I don't like this solution at all and it seems quite
-  fragile, but supporting Ubuntu 12.04 isn't my first priority.
-
 # vim: set tw=79:
