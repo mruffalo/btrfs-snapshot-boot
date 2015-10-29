@@ -16,7 +16,7 @@ case "${1}" in
 		;;
 esac
 
-if [ -x /sbin/btrfs ]
+if [ -x /sbin/btrfs -o -x /bin/btrfs ]
 then
 	timestamp=$(date +%Y%m%d-%H%M%S%z)
 	mkdir -p /mnt/btrfs
